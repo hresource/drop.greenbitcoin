@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Bitcoin</title>
+
+  <!-- Fonts and Libraries -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0A0A;
+      color: #fff; overflow-x: hidden; }
+	  
+    :root {
+      --bs-primary: #0A0A0A;
+      --bs-secondary: #1FF9AB;
+      --bs-green: #00FFA3;
+      --bs-orange: #FF6B00;
+      --bs-light: #F5F5F5;
+      --bs-dark: #0A0A0A;
+      --shadow: 0 4px 20px rgba(0,255,163,0.3);
+      --radius: 10px;
+    }
+    header {
+      position: fixed;
+      top: 0;      
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--bs-dark);
+      border-bottom: 1px solid #222;
+	  }
+    body {
+      padding-top: 80px; 
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem; 
+	  flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+	  background: none; border: none; 
+	  cursor: pointer;   
+    }
+    .btn-buy {
+      background-color: transparent;
+      color: var(--bs-orange);
+      border: 1px solid var(--bs-orange);
+      border-radius: 12px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      box-shadow: 0 0 10px var(--bs-orange);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-app {
+      background-color: transparent;
+      color: var(--bs-green);
+      border: 1px solid var(--bs-green);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-main {
+      background-color: #1B4332;
+      color: white;
+      border: 1px solid #00A86B;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+    }
+	
+	/* Add shadow on hover for all buttons */
+  .btn-buy:hover,
+  .btn-app:hover,
+  .btn-main:hover {
+    box-shadow: 0 4px 15px rgba(0, 255, 163, 0.4); /* Greenish glow for hover */
+  }
+    .hero {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 6rem 2rem 4rem;
+      gap: 3rem;
+    }
+    .hero-text {
+      flex: 1;
+      max-width: 50%;    }
+    .hero-text h1 {
+      font-size: 2.5rem;
+      line-height: 1.6;
+      font-weight: 300;  
+      margin-bottom: 1.5rem;
+    }
+    .hero-text h1 span {
+      display: inline;
+      color: white;
+      font-weight: 400;
+    }
+    .hero-text h1 strong {
+      display: inline;
+      color: var(--bs-green);
+      font-weight: 400;
+    }
+    .hero-buttons {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .hero-buttons .btn-main {
+      min-width: 140px;
+      text-align: center;
+	  
+	  }
+    .disclaimer {
+      color: #00ff84;
+      font-size: 0.8rem;
+      margin-top: 2rem;
+    }
+      /* Claim box styles */
+  .claim-box {
+    flex: 1;
+    background: black;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 40%;
+    box-shadow: var(--shadow);
+    }
+    .claim-box p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .claim-box .btn-main {
+      display: block;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .stats-section {
+      text-align: center;
+      padding: 4rem 2rem 2rem; text-align: center; 
+	  }
+	
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .stat-box {
+      text-align: center;
+    }
+    .stat-box h2 {
+      font-size: 2rem;
+      color: white;
+    }
+    .stat-box p {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .how-it-works h2 {
+      color: var(--bs-green);
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .how-it-works p {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      font-size: 1rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+	@media (max-width: 768px) {
+    header {
+        height: 150px;  /* Extra height for phones if text wraps */
+    }
+}
+    @media(max-width: 768px) {
+	
+      .hero {
+        flex-direction: column;
+      }
+      .hero-text, .claim-box {
+        max-width: 100%;
+        width: 100%;
+      }
+      nav {
+        flex-wrap: wrap;
+      }
+    }
+  </style> 
+</head>
+<body>
+  <header>
+    <div class="logo">
+  <img src="index_files/hi.svg" rel="icon" type="image/x-icon" alt="Green Bitcoin Logo" width="120" height="70">
+</div>
+    <nav>
+      <a href="https://greenbitcoin.xyz/en/dashboard">Staking</a>
+      <a href="https://greenbitcoin.xyz/en/media">Media</a>
+      <a href="#whats-this">About</a>
+      <button class="style interact-button btn-buy" onclick="buyNow()">Buy Now</button>
+     <div style="display: flex; gap: 20px; align-items: center; flex-wrap: nowrap; overflow-x: auto; padding: 20px; background: #000;">
+
+  <a href="https://twitter.com/GreenBTCtoken" target="_blank">
+    <img src="index_files/twitter.svg" alt="Icon 1" style="height: 20px;">
+  </a>
+
+  <a href="https://t.me/greenbtc_en" target="_blank">
+    <img src="index_files/hello.svg" alt="Icon 2" style="height: 20px;">
+  </a>
+
+  <a href="https://www.dextools.io/app/en/ether/pair-explorer/0xafb26d9d6e75dbf1ee9775e230306da3d7b0177b?t=1753229808546" target="_blank">
+    <img src="index_files/dextools.svg" alt="Icon 3" style="height: 20px;">
+  </a>
+
+  <a href="http://bitget.com/spot/GBTCUSDT" target="_blank">
+    <img src="index_files/bitget.svg" alt="Icon 4" style="height: 20px;">
+  </a>
+
+  <a href="https://www.mexc.com/exchange/GREENBTC_USDT" target="_blank">
+    <img src="index_files/mexc-logo.svg" alt="Icon 5" style="height: 20px;">
+  </a>
+</div>
+<nav>
+<button class="style interact-button btn-app" style="background-color: #1B4332; color: white; border: 1px solid #00A86B; border-radius: 10px;">  Launch App</button>
+	</nav>	
+  </header>
+  <section class="hero">
+    <div class="hero-text">	
+	
+      <h1>
+	 
+        <span>Green Bitcoin — </span><strong>The Future of Predict-To-Earn.</strong>
+      </h1>
+      <p>Green Bitcoin introduces a revolutionary Decentralized Gamified Green Staking mechanism. New challenges LIVE every week.</p>
+      <div class="hero-buttons">
+        <button class="style interact-button btn-main" style="color: #50C878;">  Green Paper</button>
+        <button class="style interact-button btn-main" style="background-color: black; border: 1px solid white; color: white;"> Launch App</button>
+        <button class="style interact-button btn-main" style="background-color: black; border: 1px solid white; color: white;"> Audit</button>
+      </div>
+      <p class="disclaimer">Disclaimer: This platform hosts a cryptocurrency presale. It is not a regulated financial service. Participating involves risks, including the potential loss of investment. Users should conduct their own due diligence and consult with experts. Compliance with local laws and regulations is the responsibility of the participants. We never store user funds....</p>
+    </div>
+    <div class="claim-box">     
+<h3 style="font-family: 'Poppins', sans-serif; font-weight: 400; color: #ffffff; text-align: center;">
+  $GBTC CLAIM NOW LIVE
+</h3>
+<p style="font-family: 'Poppins', sans-serif; font-size: 15px; line-height: 1.8; color: #ffffff; text-align: center;">
+  $GBTC Claim is now live! Stake your claimed tokens below to earn rewards!
+  
+  <p style="font-family: 'Poppins', sans-serif; font-size: 15px; line-height: 1.8; color: #ffffff; text-align: center;"> 
+    Add </p>
+	<p style="font-family: 'Poppins', sans-serif; font-size: 13px; line-height: 1.8; color: #ffffff; text-align: center;"> 
+	0xdc9cb148ecb70876db0abeb92f515a5e1dc9f580	
+    to your wallet to see your $GBTC </p>
+	<p style="font-family: 'Poppins', sans-serif; font-size: 15px; line-height: 1.8; color: #ffffff; text-align: center;"> 	
+	Tokens
+<p style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 1.8; color: #ffffff; text-align: center; white-space: nowrap;">  YOUR PURCHASED $GBTC: 0 <span title="info" style="display: inline-block; vertical-align: middle;"> <img src="index_files/info-icon.svg" alt="Info" style="width: 16px; height: 16px; vertical-align: middle;"> </span> </p>
+<p style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 1.8; color: #ffffff; text-align: center;"> YOUR STAKEABLE $GBTC: 0 <span title="info" style="display: inline-block; vertical-align: middle;"> <img src="index_files/info-icon.svg" alt="Info" style="width: 16px; height: 16px; vertical-align: middle;"> </span> </p>
+      <button class="style interact-button btn-main" onclick="buyNow()">Buy Now on Uniswap</button>
+      <button class="style interact-button btn-main" onclick="connectWallet()">Connect Wallet</button>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <div class="stats-row">
+      <div class="stat-box">
+        <h2>2,973,429</h2>
+        <p>Total $GBTC Staked</p>
+      </div>
+      <div class="stat-box">
+        <h2>25%</h2>
+        <p>% of $GBTC Staked</p>
+      </div>
+      <div class="stat-box">
+        <h2>194%</h2>
+        <p>Rewards p/a</p>
+      </div>
+      <div class="stat-box">
+        <h2>0</h2>
+        <p>Total Rewards ($GBTC)</p>
+      </div>
+    </div>
+    <div class="how-it-works">
+      <h2>How It Works</h2>
+      <p>Green Bitcoin offers a gamified staking platform where users connect their wallets, stake GBTC funds for periods between 1 to 24 months, and participate in 7 Day Pools by choosing Bitcoin price trends as bullish or bearish. Staked funds earn daily rewards, while successful pool predictions unlock additional earnings based on entry timing, staking duration, and amount staked. Users can adjust their stakes during the period or modify pool entries, though changes may impact rewards.</p>
+      <p>Green Bitcoin is built on the Polygon network for its low transaction fees and high scalability. Polygon's low transaction fees significantly reduce the cost of interactions like staking, pool entries, and reward claims. Polygon’s scalability means the platform can handle a large number of users and transactions without network congestion enhancing high-speed transactions.</p>
+    </div>
+  </section>
+</body>
+</section>
+<section style="background-color: #0c0c0c; padding: 40px; text-align: center;">
+  <img src="index_files/banner.gif" alt="Animated Banner" style="max-width: 100%; height: auto;">
+</section>
+<section style="background-color: #0c0c0c; color: white; text-align: center; padding: 60px 20px;">
+  <div style="display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;">
+   
+  <div class="how-it-works" style="max-width: 800px; margin: 0 auto; padding: 20px; text-align: center;">
+    <p>
+      <strong>Lock and Earn Today for Guaranteed Rewards!</strong>
+    </p>
+    <button 
+      type="button" 
+      class="style interact-button stake-container" 
+      style="padding: 12px 28px; background: #00FF94; color: black; font-weight: bold; border-radius: 8px; text-decoration: none; font-size: 16px;"
+    >
+      Stake Now
+    </button>
+  </div>
+</div>
+
+<body style="margin: 0; background-color: #0b0b0f; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white;">
+  <style>
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .featured {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: #b0b0b0;
+      margin-bottom: 20px;
+    }
+
+    .logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .logos img {
+      height: 28px;
+      opacity: 0.85;
+      transition: transform 0.3s;
+    }
+
+    .logos img:hover {
+      transform: scale(1.1);
+    }
+
+    .headline {
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 50px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .green {
+      color: #00ff88;
+    }
+
+    .content-card {
+      display: flex;
+      justify-content: space-between;
+      background-color: #0e1b14;
+      padding: 30px;
+      border-radius: 16px;
+      margin: 0 auto;
+      max-width: 900px;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .left-card {
+      flex: 1.4;
+      text-align: left;
+    }
+
+    .left-card h2 {
+      color: #00ff88;
+      margin-bottom: 12px;
+    }
+
+    .left-card p {
+      color: #cccccc;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .right-card {
+      flex: 1;
+      text-align: left;
+      padding-left: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .right-card img {
+      width: 80px;
+      margin: 20px 0;
+    }
+
+    .right-card h3 {
+      color: white;
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .right-card p {
+      color: #b0b0b0;
+      font-size: 14px;
+      margin: 10px 0 20px;
+    }
+
+    .btn {
+      background-color: #ffffff10;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #00ff8855;
+      color: black;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 769px) {
+	header {
+    margin-bottom: 50px;
+   }
+}
+
+@media screen and (min-width: 768px) {
+    .hero-section h1 {
+      font-size: 36px;
+    }	
+	
+	      .content-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .right-card {
+        padding-left: 0;
+        align-items: center;
+      }
+
+      .right-card img {
+        margin: 20px auto;
+      }
+    }
+  </style>
+  <div class="Sytle interact-button-container">
+    <h3 style="letter-spacing: 2px; margin-top: 40px;">FEATURED IN</h3>
+	    <div class="logos">
+	<body>
+      <img src="index_files/finbold.svg" alt="Finbold" height="28">
+      <img src="index_files/bitcoin.svg" alt="Bitcoinist"> 
+      <img src="index_files/newsbtc.svg" alt="NewsBTC">
+      <img src="index_files/cyptonews.svg" alt="CryptoNews">
+      <img src="index_files/inside-bitcoin.svg" alt="Inside Bitcoins">
+      <img src="index_files/techno.svg" alt="Techopedia">
+      <img src="index_files/cointelegraph.svg" alt="CoinTelegraph">
+      <img src="index_files/coingape.svg" alt="CoinGape"height="28">
+    </div>
+   <div class="headline">
+      <span class="green">Bitcoin Goes Green</span> — What is <br />
+      <strong>Green Bitcoin ($GBTC)?</strong>
+    </div>
+
+    <div class="content-card">
+      <div class="left-card">
+        <h2>Green Bitcoin – The Eco-Friendly Alternative</h2>
+        <p>
+          Green Bitcoin is the ultimate in sustainable crypto earnings. Engage in weekly prediction challenges and stake your tokens.
+        </p>
+      </div>
+      <div class="right-card">
+        <h3>Want to Earn Big?</h3>
+        <p>Passive rewards have never been simpler.</p>
+        <img src="https://greenbitcoin.xyz/assets/images/plant.gif" alt="Green Bitcoin">
+        <div class="style interact-button btn">Here's How It Works</div>
+      </div>
+    </div>
+  </div>
+</body>
+<div style="padding: 50px 20px; display: flex; justify-content: center; align-items: center;">
+    <div style="background: linear-gradient(145deg, #0f2d23, #061410); padding: 30px; border-radius: 12px; border: 1px solid #1f1f1f; display: flex; gap: 40px; flex-wrap: wrap; max-width: 1000px; width: 100%;">
+      
+      <!-- Green BTC -->
+      <div style="background: rgba(0, 255, 135, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #00ff87; width: 200px;">
+        <h3 style="color: #00ff87; margin-bottom: 10px;">Green BTC</h3>
+        <p><strong>Proof type:</strong><br> POS (Proof of Stake)</p>
+        <p><strong>Energy/TX:</strong><br> 34 Wh</p>
+        <p><strong>Rewards:</strong><br> Yes (Gamified Staking)</p>
+        <p><strong>Gamification:</strong><br> Yes</p>
+      </div>
+
+      <!-- BTC -->
+      <div style="width: 200px;">
+        <h3 style="color: #ffffffb3; margin-bottom: 10px;">BTC</h3>
+        <p><strong>Proof type:</strong><br> POW (Proof of Work)</p>
+        <p><strong>Energy/TX:</strong><br> 1,173,000 Wh</p>
+        <p><strong>Rewards:</strong><br> No (Store of Value)</p>
+        <p><strong>Gamification:</strong><br> No</p>
+      </div>
+
+      <!-- BTC Cash -->
+      <div style="width: 200px;">
+        <h3 style="color: #ffffffb3; margin-bottom: 10px;">BTC Cash</h3>
+        <p><strong>Proof type:</strong><br> POW (Proof of Work)</p>
+        <p><strong>Energy/TX:</strong><br> 189.75 Wh</p>
+        <p><strong>Rewards:</strong><br> No (Store of Value)</p>
+        <p><strong>Gamification:</strong><br> No</p>
+      </div>
+
+      <!-- BTC SV -->
+      <div style="width: 200px;">
+        <h3 style="color: #ffffffb3; margin-bottom: 10px;">BTC SV</h3>
+        <p><strong>Proof type:</strong><br> POW (Proof of Work)</p>
+        <p><strong>Energy/TX:</strong><br> 913 Wh</p>
+        <p><strong>Rewards:</strong><br> No (Store of Value)</p>
+        <p><strong>Gamification:</strong><br> No</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: -30px;">
+  <button class="style interact-button btn-buy" onclick="buyNow()">Buy Now</button>           
+  </div>
+
+  <!-- Section Title -->
+  <div style="text-align: center; margin: 60px 0;">
+    <h2 style="color: #00ffae; font-size: 32px;">GREEN BITCOIN TOKENOMICS</h2>
+  </div>
+  </body>
+  <body style="margin: 0; font-family: Arial, sans-serif; background-color: #0a0a0a; color: white; padding: 40px 20px; display: flex; flex-direction: column; align-items: center;">
+  <div style="display: flex; flex-wrap: wrap; max-width: 1200px; justify-content: space-between; gap: 40px;">
+    
+    <!-- Left Text Section -->
+    <div style="flex: 1; min-width: 300px; padding: 20px;">
+  <h3 style="font-size: 20px; margin: 20px 0 5px; color: #ffffff;">Presale - 50%</h3>
+  <p style="color: #ccc; line-height: 1.5; font-size: 15px;">
+    Early adopters gain a significant advantage with the $GBTC Presale, setting the stage for a dynamic beginning in our venture.
+  </p>
+
+  <h3 style="font-size: 20px; margin: 20px 0 5px; color: #ffffff;">Staking Rewards - 20%</h3>
+  <p style="color: #ccc; line-height: 1.5; font-size: 15px;">
+    A substantial allocation is dedicated to rewarding those participating in staking, supporting the long-term value and stability of $GBTC.
+  </p>
+
+  <h3 style="font-size: 20px; margin: 20px 0 5px; color: #ffffff;">Marketing - 12.50%</h3>
+  <p style="color: #ccc; line-height: 1.5; font-size: 15px;">
+    This portion focuses on crafting impactful campaigns and is key to enhancing global visibility and keeping $GBTC prominent.
+  </p>
+
+  <h3 style="font-size: 20px; margin: 20px 0 5px; color: #ffffff;">Liquidity - 7.50%</h3>
+  <p style="color: #ccc; line-height: 1.5; font-size: 15px;">
+    Essential for maintaining fluidity in trading, this allocation is split evenly between Centralized and Decentralized Exchanges (CEX & DEX), ensuring $GBTC’s robust market presence.
+  </p>
+
+  <h3 style="font-size: 20px; margin: 20px 0 5px; color: #ffffff;">Community Rewards - 10%</h3>
+  <p style="color: #ccc; line-height: 1.5; font-size: 15px;">
+    This allocation is dedicated to nurturing our community and rewarding engagement and involvement.
+  </p>
+</div>
+
+    <!-- Right Chart Section -->
+   <div style="flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center;">
+  <img src="index_files/tokenomics-img.svg" alt="Token Distribution Chart" style="width: 100%; max-width: 400px; border-radius: 10px;" />
+</div>
+</div>
+<!-- Right Chart Section -->
+</body>
+<body style="background-color: #000; color: white; font-family: Arial, sans-serif; padding: 40px 20px;">
+  <p style="text-align: center; font-size: 28px; font-weight: bold; margin-bottom: 50px;">
+    GREEN BITCOIN ROADMAP
+  </p>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1000px; margin: 0 auto;">
+    
+    <!-- Step 1 -->
+    <div style="flex: 1; min-width: 300px;">
+      <p style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">Step 1</p>
+      <p style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">Presale Launch</p>
+      <p style="color: #ccc; line-height: 1.5;">
+        Kick off with an affordable presale of $GBTC to fund tech and marketing. This step is key to building a strong foundation for Green Bitcoin’s future.
+      </p>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="flex: 1; min-width: 300px;">
+      <p style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">Step 2</p>
+      <p style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">Token Release</p>
+      <p style="color: #ccc; line-height: 1.5;">
+        $GBTC hits Ethereum DEXs, with some supply locked to keep trading smooth and decentralized. This step is about making sure $GBTC trading is fair and steady.
+      </p>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="flex: 1; min-width: 300px;">
+      <p style="font-size: 20px; font-weight: bold; margin-top: 40px;">Step 3</p>
+      <p style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">Staking & Predictions Go Live</p>
+      <p style="color: #ccc; line-height: 1.5;">
+        Go Live The start of our unique Decentralized Gamified Green Staking mechanic to get early users involved. This early action helps build our community’s strength.
+      </p>
+    </div>
+
+    <!-- Step 4 -->
+    <div style="flex: 1; min-width: 300px;">
+      <p style="font-size: 20px; font-weight: bold; margin-top: 40px;">Step 4</p>
+      <p style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">Build Community</p>
+      <p style="color: #ccc; line-height: 1.5;">
+        Let $GBTC holders participate in the Decentralized Gamified Green Staking mechanic, encouraging everyone to engage and help the decentralized community thrive.
+      </p>
+    </div>
+  </div>
+  <!-- Right Chart Section -->
+  
+<div style="background-color:#000; font-family:Arial,sans-serif; color:white; padding:60px 20px; display:flex; flex-direction:column; align-items:center;">
+  <div style="text-align:center; font-size:28px; font-weight:bold; margin-bottom:40px;">Have any Questions?</div>
+
+  <div style="width:100%; max-width:600px; display:flex; flex-direction:column; gap:15px;">
+    <div style="background-color:#111; padding:15px 20px; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;">How To Buy Green Bitcoin?</div>
+    <div style="background-color:#111; padding:15px 20px; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;">What is Green Bitcoin ($GBTC)?</div>
+    <div style="background-color:#111; padding:15px 20px; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;">How do I Contact the Green Bitcoin Team?</div>
+    <div style="background-color:#111; padding:15px 20px; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;">Is Green Bitcoin Eco-Friendly?</div>
+    <div style="background-color:#111; padding:15px 20px; border-radius:12px; font-size:16px; font-weight:bold; cursor:pointer;">When is the Green Bitcoin Presale?</div>
+  </div>
+
+  <div style="margin-top:40px;">
+  <button class="style interact-button btn-buy" onclick="buyNow()">Buy Now</button>    
+    </button>
+  </div>
+</div>
+  
+<!-- Section Title -->
+<div style="background-color: #000; color: #ccc; font-family: Arial, sans-serif; text-align: center; padding: 60px 20px 80px;">
+  <div style="color: #fff; font-size: 15px; margin-bottom: 30px;">
+    &copy; 2025 Green Bitcoin. All rights reserved.
+  </div>
+
+  <div style="max-width: 800px; margin: 0 auto;">
+      <div style="font-weight: bold; color: #ffffff; font-size: 14px; margin-bottom: 10px; letter-spacing: 1px;">DISCLAIMER</div>    
+    </div>
+    <div style="font-size: 14px; line-height: 1.6; color: #bbbbbb;">
+      Cryptocurrency investments carry a high level of risk and may not be suitable for all investors. Prices can fluctuate significantly and you may lose your entire investment.
+      Please ensure you understand the risks and consult with a licensed financial advisor if necessary. Tax and regulatory rules vary by jurisdiction. Always do your own research before participating in any crypto-related activity.
+    </div>
+  </div>
+</div>
+
+<script charset="UTF-8" type="text/javascript" src="./app-44a6f44943603a71.min.js"></script>
+</body>
+</html>
